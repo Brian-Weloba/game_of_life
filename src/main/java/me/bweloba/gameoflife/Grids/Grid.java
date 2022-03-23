@@ -2,8 +2,8 @@ package me.bweloba.gameoflife.Grids;
 
 //grid for game of life with 45 rows and 90 columns
 public class Grid {
-    private int numRows = 20;
-    private int numCols = 40;
+    private int numRows = 30;
+    private int numCols = 63;
     private int[][] grid;
     private boolean running;
     public int speedRef = 0;
@@ -135,11 +135,7 @@ public class Grid {
 
     //method to toggle running
     public void toggleRunning() {
-        if (running) {
-            running = false;
-        } else {
-            running = true;
-        }
+        running = !running;
     }
 
     //method to get running
