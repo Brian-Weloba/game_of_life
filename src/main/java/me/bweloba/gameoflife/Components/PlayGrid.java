@@ -1,31 +1,28 @@
 package me.bweloba.gameoflife.Components;
 
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.TilePane;
-import javafx.scene.paint.Color;
 import me.bweloba.gameoflife.Grids.Grid;
+import me.bweloba.gameoflife.models.TilePaneModel;
 
 public class PlayGrid {
 
     private static final Grid grids = new Grid();
+    static TilePaneModel tilePaneModel = new TilePaneModel();
+    static TilePane tile = tilePaneModel.getTile();
+
+    public PlayGrid() {
+        int[][] grid = grids.generateRandomGrid(0.5);
+        updateTilePaneWithGrid(grid, tile);
+    }
+
 
     public static TilePane addTilePane() {
-        TilePane tile = new TilePane();
-        tile.setPrefColumns(grids.getNumCols());
-        tile.setPrefRows(grids.getNumRows());
-        tile.setHgap(2);
-        tile.setVgap(2);
-        tile.alignmentProperty().set(javafx.geometry.Pos.CENTER);
-        //add padding to the tile pane
-        tile.setPadding(new javafx.geometry.Insets(5, 5, 5, 5));
-        //make background blue
-        tile.setBackground(new Background(new BackgroundFill(Color.web("#001318"), null, null)));
-        tile.setMinSize((grids.getNumCols() * 15) + (grids.getNumCols() * 2), (grids.getNumRows() * 15) + (grids.getNumRows() * 2));
+        return PlayGrid.tile;
+    }
 
-        int[][] grid = grids.generateRandomGrid(0.9);
-
+    private static void updateTilePaneWithGrid(int[][] grid, TilePane tile) {
         for (int[] ints : grid) {
             for (int anInt : ints) {
                 if (anInt == 1) {
@@ -35,10 +32,11 @@ public class PlayGrid {
                 }
             }
         }
+        setCellColor(tile);
+    }
 
-        //loop through all the children
+    private static void setCellColor(TilePane tile) {
         for (int v = 0; v < tile.getChildren().size(); v++) {
-            //get button value
             String value = tile.getChildren().get(v).getId();
             if (value.equals("1")) {
                 tile.getChildren().get(v).setStyle("-fx-background-color: #2a9d8f;-fx-border-color: #ffffff; -fx-border-width: 1px;");
@@ -46,8 +44,6 @@ public class PlayGrid {
                 tile.getChildren().get(v).setStyle("-fx-background-color: #001318;-fx-border-color: #ffffff; -fx-border-width: 1px;");
             }
         }
-//        Scene tileScene = new Scene(tile);
-        return tile;
     }
 
     //method to construct button
@@ -60,5 +56,22 @@ public class PlayGrid {
         button.setShape(new javafx.scene.shape.Circle(17.5));
 
         return button;
+    }
+
+    @FXML
+    public void onClearButtonClick() {
+        tile.getChildren().clear();
+        int[][] grid = grids.generateEmptyGrid();
+        updateTilePaneWithGrid(grid, tile);
+        System.out.println("Cleared");
+    }
+
+
+    @FXML
+    public void onSpawnButtonClick() {
+        tile.getChildren().clear();
+        int[][] grid = grids.generateRandomGrid(0.5);
+        updateTilePaneWithGrid(grid, tile);
+        System.out.println("Spawned");
     }
 }
