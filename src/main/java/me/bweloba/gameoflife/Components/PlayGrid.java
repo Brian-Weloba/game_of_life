@@ -2,6 +2,7 @@ package me.bweloba.gameoflife.Components;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.TilePane;
 import me.bweloba.gameoflife.Grids.Grid;
 import me.bweloba.gameoflife.models.TilePaneModel;
@@ -12,8 +13,20 @@ public class PlayGrid {
     static TilePaneModel tilePaneModel = new TilePaneModel();
     static TilePane tile = tilePaneModel.getTile();
 
+    double spawnFactor = 0.6;
+
+    @FXML
+    public Slider spawnSlider;
+
+    public void initialize() {
+
+        spawnSlider.valueProperty().addListener((observable, oldValue, newValue) -> spawnFactor = newValue.doubleValue());
+    }
+
+
     public PlayGrid() {
-        int[][] grid = grids.generateRandomGrid(0.5);
+//        this.spawnSlider.setValue(spawnFactor);
+        int[][] grid = grids.generateRandomGrid(spawnFactor);
         updateTilePaneWithGrid(grid, tile);
     }
 
@@ -23,21 +36,25 @@ public class PlayGrid {
     }
 
     private static void updateTilePaneWithGrid(int[][] grid, TilePane tile) {
-        for (int[] ints : grid) {
-            for (int anInt : ints) {
-                if (anInt == 1) {
-                    tile.getChildren().add(addButton("1"));
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                if (grid[i][j] == 1) {
+                    tile.getChildren().add(addButton(i + "," + j + "," + "1"));
                 } else {
-                    tile.getChildren().add(addButton("0"));
+                    tile.getChildren().add(addButton(i + "," + j + "," + "0"));
                 }
             }
         }
         setCellColor(tile);
     }
 
+
     private static void setCellColor(TilePane tile) {
         for (int v = 0; v < tile.getChildren().size(); v++) {
-            String value = tile.getChildren().get(v).getId();
+            String val = tile.getChildren().get(v).getId();
+//            System.out.println(val);
+            String value = val.substring(val.lastIndexOf(",") + 1);
+//            System.out.println(value);
             if (value.equals("1")) {
                 tile.getChildren().get(v).setStyle("-fx-background-color: #2a9d8f;-fx-border-color: #ffffff; -fx-border-width: 1px;");
             } else {
@@ -70,7 +87,8 @@ public class PlayGrid {
     @FXML
     public void onSpawnButtonClick() {
         tile.getChildren().clear();
-        int[][] grid = grids.generateRandomGrid(0.5);
+        int[][] grid = grids.generateRandomGrid(spawnFactor);
+
         updateTilePaneWithGrid(grid, tile);
         System.out.println("Spawned");
     }
