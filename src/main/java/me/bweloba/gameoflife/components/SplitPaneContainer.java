@@ -1,4 +1,4 @@
-package me.bweloba.gameoflife.Components;
+package me.bweloba.gameoflife.components;
 
 import javafx.fxml.FXMLLoader;
 import me.bweloba.gameoflife.Main;

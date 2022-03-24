@@ -1,4 +1,4 @@
-package me.bweloba.gameoflife.Grids;
+package me.bweloba.gameoflife.logic;
 
 public enum algorithms {
     conways,

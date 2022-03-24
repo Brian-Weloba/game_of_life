@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" fillWidth="false" maxHeight="1000.0" maxWidth="-Infinity" spacing="20.0" SplitPane.resizableWithParent="false" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.bweloba.gameoflife.Components.PlayGrid">
+<VBox alignment="CENTER" fillWidth="false" maxHeight="1000.0" maxWidth="-Infinity" spacing="20.0" SplitPane.resizableWithParent="false" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.bweloba.gameoflife.components.PlayGrid">
     <padding>
         <Insets bottom="40.0" left="20.0" right="20.0" top="40.0" />
     </padding>

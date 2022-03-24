@@ -1,10 +1,10 @@
-package me.bweloba.gameoflife.Components;
+package me.bweloba.gameoflife.components;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.TilePane;
-import me.bweloba.gameoflife.Grids.Grid;
+import me.bweloba.gameoflife.logic.Grid;
 import me.bweloba.gameoflife.models.TilePaneModel;
 
 public class PlayGrid {
