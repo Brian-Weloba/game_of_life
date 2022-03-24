@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.TilePane;
-import me.bweloba.gameoflife.logic.Grid;
+import me.bweloba.gameoflife.models.Grid;
 import me.bweloba.gameoflife.models.TilePaneModel;
 
 public class PlayGrid {

@@ -1,4 +1,4 @@
-package me.bweloba.gameoflife.logic;
+package me.bweloba.gameoflife.models;
 
 //grid for game of life with 45 rows and 90 columns
 public class Grid {
