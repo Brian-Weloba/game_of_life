@@ -7,5 +7,5 @@ module me.bweloba.gameoflife {
 
     opens me.bweloba.gameoflife to javafx.fxml;
     exports me.bweloba.gameoflife;
-    exports me.bweloba.gameoflife.Components;
+    exports me.bweloba.gameoflife.components;
 }
