@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" fillWidth="false" maxHeight="1000.0" maxWidth="-Infinity" spacing="20.0" SplitPane.resizableWithParent="false" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.bweloba.gameoflife.HelloController">
+<VBox alignment="CENTER" fillWidth="false" maxHeight="1000.0" maxWidth="-Infinity" spacing="20.0" SplitPane.resizableWithParent="false" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.bweloba.gameoflife.Components.PlayGrid">
     <padding>
         <Insets bottom="40.0" left="20.0" right="20.0" top="40.0" />
     </padding>
@@ -20,7 +20,7 @@
         </VBox.margin>
     </Label>
     <Slider blockIncrement="100.0" majorTickUnit="1000.0" max="1000.0" maxWidth="-Infinity" minorTickCount="8" prefHeight="14.0" prefWidth="70.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-    <Button text="CLEAR" />
+    <Button text="CLEAR" onAction="#onClearButtonClick"/>
     <Button text="SPAWN" />
     <Label alignment="CENTER" text="Spawn Factor" textAlignment="CENTER">
         <VBox.margin>

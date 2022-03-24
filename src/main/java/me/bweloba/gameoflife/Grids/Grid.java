@@ -2,11 +2,9 @@ package me.bweloba.gameoflife.Grids;
 
 //grid for game of life with 45 rows and 90 columns
 public class Grid {
-    private int numRows = 30;
-    private int numCols = 63;
-    private int[][] grid;
-    private boolean running;
-    public int speedRef = 0;
+    private static int numRows = 30;
+    private static int numCols = 63;
+    private static int[][] grid;
 
 
     //constructor
@@ -21,7 +19,7 @@ public class Grid {
 
     //setter for grid
     public void setGrid(int[][] grid) {
-        this.grid = grid;
+        Grid.grid = grid;
     }
 
     //getter for numRows
@@ -36,21 +34,22 @@ public class Grid {
 
     //setter for numRows
     public void setNumRows(int numRows) {
-        this.numRows = numRows;
+        Grid.numRows = numRows;
     }
 
     //setter for numCols
     public void setNumCols(int numCols) {
-        this.numCols = numCols;
+        Grid.numCols = numCols;
     }
 
     //method to generate empty grid
-    public void generateEmptyGrid() {
+    public int[][] generateEmptyGrid() {
         for (int i = 0; i < numRows; i++) {
             for (int j = 0; j < numCols; j++) {
                 grid[i][j] = 0;
             }
         }
+        return grid;
     }
 
     //method to generate random grid with a randomized factor x to determine the population density
@@ -68,7 +67,7 @@ public class Grid {
     }
 
     // method to fill the grid with empty cells
-    public void clearGrid() {
+    public static void clearGrid() {
         for (int i = 0; i < numRows; i++) {
             for (int j = 0; j < numCols; j++) {
                 grid[i][j] = 0;
@@ -132,29 +131,29 @@ public class Grid {
         }
         return count;
     }
-
-    //method to toggle running
-    public void toggleRunning() {
-        running = !running;
-    }
-
-    //method to get running
-    public boolean getRunning() {
-        return running;
-    }
-
-    //method to set running
-    public void setRunning(boolean running) {
-        this.running = running;
-    }
-
-    //method to get speedRef
-    public int getSpeedRef() {
-        return speedRef;
-    }
-
-    //method to set speedRef
-    public void setSpeedRef(int speedRef) {
-        this.speedRef = speedRef;
-    }
+//
+//    //method to toggle running
+//    public void toggleRunning() {
+//        running = !running;
+//    }
+//
+//    //method to get running
+//    public boolean getRunning() {
+//        return running;
+//    }
+//
+//    //method to set running
+//    public void setRunning(boolean running) {
+//        this.running = running;
+//    }
+//
+//    //method to get speedRef
+//    public int getSpeedRef() {
+//        return speedRef;
+//    }
+//
+//    //method to set speedRef
+//    public void setSpeedRef(int speedRef) {
+//        this.speedRef = speedRef;
+//    }
 }
