@@ -68,4 +68,7 @@ public class Grid extends Thread {
         }).start();
         return grid;
     }
+
+    //method to calculate the number of neighbors
+
 }
