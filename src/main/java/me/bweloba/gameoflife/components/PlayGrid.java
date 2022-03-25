@@ -17,7 +17,7 @@ import me.bweloba.gameoflife.models.TilePaneModel;
  * @see TilePane
  * @since 1.0
  */
-public class PlayGrid extends Thread {
+public class PlayGrid {
 
     private static final Grid grids = new Grid();
     static TilePaneModel tilePaneModel = new TilePaneModel();
@@ -29,7 +29,6 @@ public class PlayGrid extends Thread {
     public Slider spawnSlider;
 
     public void initialize() {
-
         spawnSlider.valueProperty().addListener((observable, oldValue, newValue) -> spawnFactor = newValue.doubleValue());
     }
 
@@ -54,16 +53,13 @@ public class PlayGrid extends Thread {
                 }
             }
         }
-
         setCellColor(tile);
     }
 
     private static void setCellColor(TilePane tile) {
         for (int v = 0; v < tile.getChildren().size(); v++) {
             String val = tile.getChildren().get(v).getId();
-//            System.out.println(val);
             String value = val.substring(val.lastIndexOf(",") + 1);
-//            System.out.println(value);
             if (value.equals("1")) {
                 tile.getChildren().get(v).setStyle("-fx-background-color: #2a9d8f;-fx-border-color: #ffffff; -fx-border-width: 1px;");
             } else {
@@ -90,9 +86,6 @@ public class PlayGrid extends Thread {
             int k = Integer.parseInt(values[2]);
             int index = i * 62 + j + i;
             Button b = (Button) tile.getChildren().get(index);
-            System.out.println("index: " + index);
-//            System.out.println(i + "," + j + "," + k);
-            System.out.println(tile.getChildren().get(index) + "\n");
             if (k == 1) {
                 b.setStyle("-fx-background-color: #001318;-fx-border-color: #ffffff; -fx-border-width: 1px;");
                 b.setId(i + "," + j + "," + "0");
@@ -116,24 +109,21 @@ public class PlayGrid extends Thread {
         System.out.println("Cleared");
     }
 
-
     @FXML
     public void onSpawnButtonClick() {
         int[][] grid = grids.generateRandomGrid(spawnFactor);
 
-        for (int i = 0; i < grid.length; i++) {
+        for (int i = 0; i < grid.length; i++)
             for (int j = 0; j < grid[i].length; j++) {
                 Button b = (Button) tile.getChildren().get(i * 62 + j + i);
                 if (grid[i][j] == 1) {
                     b.setStyle("-fx-background-color: #2a9d8f;-fx-border-color: #ffffff; -fx-border-width: 1px;");
                     b.setId(i + "," + j + "," + "1");
                 } else {
-
                     b.setStyle("-fx-background-color: #001318;-fx-border-color: #ffffff; -fx-border-width: 1px;");
                     b.setId(i + "," + j + "," + "0");
                 }
             }
-        }
         System.out.println("Spawned");
     }
 }
