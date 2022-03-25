@@ -21,9 +21,6 @@ public class TilePaneModel {
         tile.setMinSize((grids.getNumCols() * 15) + (grids.getNumCols() * 2), (grids.getNumRows() * 15) + (grids.getNumRows() * 2));
     }
 
-    //get one tile in TilePane
-
-
     public  TilePane getTile() {
         return tile;
     }
