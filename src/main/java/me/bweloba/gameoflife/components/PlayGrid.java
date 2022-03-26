@@ -5,14 +5,14 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import me.bweloba.gameoflife.models.Grid;
 import me.bweloba.gameoflife.models.TilePaneModel;
 
-import static me.bweloba.gameoflife.logic.Algorithms.applyConwayRules;
-import static me.bweloba.gameoflife.logic.Algorithms.computeNeighbors;
+import static me.bweloba.gameoflife.logic.Algorithms.*;
 
 /**
  * @author Brian Weloba
@@ -43,6 +43,9 @@ public class PlayGrid {
 
     @FXML
     public Slider speedSlider;
+
+    @FXML
+    public ChoiceBox algoChoice;
 
     public void initialize() {
         spawnSlider.valueProperty().addListener((observable, oldValue, newValue) -> spawnFactor = newValue.doubleValue());
@@ -98,14 +101,14 @@ public class PlayGrid {
 
         button.setOnMouseClicked(event -> {
             String val = button.getId();
-            System.out.println(val);
+//            System.out.println(val);
             String[] values = val.split(",");
             int i = Integer.parseInt(values[0]);
             int j = Integer.parseInt(values[1]);
             int k = Integer.parseInt(values[2]);
             int index = i * cols + j + i;
             Button b = (Button) tile.getChildren().get(index);
-            System.out.println("pGrid[" + i + "][" + j + "] = " + k);
+//            System.out.println("pGrid[" + i + "][" + j + "] = " + k);
             if (k == 1) {
                 b.setStyle("-fx-background-color: #001318;-fx-border-color: #ffffff; -fx-border-width: 1px;");
                 b.setId(i + "," + j + "," + "0");
@@ -115,18 +118,17 @@ public class PlayGrid {
                 b.setId(i + "," + j + "," + "1");
                 pGrid[i][j] = 1;
             }
-            System.out.println("outside pGrid[" + i + "][" + j + "] = " + pGrid[i][j]);
-
-            int neighborCount = computeNeighbors(pGrid, i, j);
-            System.out.println(neighborCount);
-
-
+//            System.out.println("outside pGrid[" + i + "][" + j + "] = " + pGrid[i][j]);
+//            int neighborCount = computeNeighbors(pGrid, i, j);
+//            System.out.println(neighborCount);
         });
         return button;
     }
 
     @FXML
     public void onClearButtonClick() {
+
+//        System.out.println("algoChoice.getValue() = " + algoChoice.getValue());
         if (timeline.getStatus() == Animation.Status.RUNNING) {
             timeline.stop();
         }
@@ -139,7 +141,7 @@ public class PlayGrid {
             b.setId(values[0] + "," + values[1] + "," + "0");
         }
         pGrid = grids.generateEmptyGrid();
-        System.out.println("Cleared");
+//        System.out.println("Cleared");
     }
 
 
@@ -164,9 +166,31 @@ public class PlayGrid {
             }
     }
 
-    final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.02), event -> {
+    int number = 5;
+    public void random() {
+        System.out.println("random number = " + number);
+    }
 
-        int[][] nGrid = applyConwayRules(pGrid);
+    public int[][] runAlgorithm(String algoChoice, int[][] grid) {
+        return switch (algoChoice) {
+            case "Conway's GOL" -> applyConwayRules(grid);
+            case "High Life" -> applyHighLifeRules(grid);
+            case "Day &amp; Night" -> applyDayNightRules(grid);
+            case "Diamoeba" -> applyDiamoebaRules(grid);
+            case "Replicator" -> applyReplicatorRules(grid);
+            case "Seeds" -> applySeedsRules(grid);
+            case "2x2" -> apply2x2Rules(grid);
+            case "Life without Death" -> applyLifeWithoutDeathRules(grid);
+            case "Morley's GOL" -> applyMorleyGOLRules(grid);
+            case "Anneal" -> applyAnnealRules(grid);
+            case "34 Life" -> apply34LifeRules(grid);
+            default -> null;
+        };
+    }
+
+    final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.02), event -> {
+//        random();
+        int[][] nGrid = runAlgorithm((String) algoChoice.getValue(), pGrid);
         pGrid = nGrid;
         for (int i = 0; i < nGrid.length; i++)
             for (int j = 0; j < nGrid[i].length; j++) {
@@ -181,18 +205,20 @@ public class PlayGrid {
             }
     }));
 
+
     @FXML
     public void onStartButtonClick() {
-
         if (timeline.getStatus() == Animation.Status.STOPPED) {
             timeline.setCycleCount(Animation.INDEFINITE);
             timeline.play();
             speedSlider.setDisable(true);
             startButton.setText("STOP");
+            algoChoice.setDisable(true);
         } else {
             timeline.stop();
             speedSlider.setDisable(false);
             startButton.setText("START");
+            algoChoice.setDisable(false);
         }
 
     }
