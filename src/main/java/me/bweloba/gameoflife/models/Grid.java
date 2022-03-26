@@ -2,8 +2,12 @@ package me.bweloba.gameoflife.models;
 
 //grid for game of life
 public class Grid extends Thread {
-    private static int numRows = 30;
-    private static int numCols = 63;
+    //        private static int numRows = 30;
+    private static int numRows = 40;
+
+
+    //        private static int numCols = 63;
+    private static int numCols = 71;
     private static int[][] grid;
 
     //constructor

@@ -1,6 +1,11 @@
 package me.bweloba.gameoflife.logic;
 
+import me.bweloba.gameoflife.models.Grid;
+
 public class Algorithms {
+    int numRows = new Grid().getNumRows();
+
+
     //calculate the number of neighbors to a cell
     public static int computeNeighbors(int[][] board, int row, int col) {
         int neighbors = 0;
@@ -15,16 +20,17 @@ public class Algorithms {
     }
 
     /**
-     * Conways'game of life rules
+     * Conway's game of life rules
      * 1. Any live cell with fewer than two live neighbors dies, as if caused by underpopulation.
      * 2. Any live cell with two or three live neighbors lives on to the next generation.
      * 3. Any live cell with more than three live neighbors dies, as if by overpopulation.
      * 4. Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
+     *
      * @param board the current board
      * @return int[][] the next board
      */
     public static int[][] applyConwayRules(int[][] board) {
-        //loop through the board
+        //loop through the board\
         int[][] newBoard = new int[board.length][board[0].length];
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {

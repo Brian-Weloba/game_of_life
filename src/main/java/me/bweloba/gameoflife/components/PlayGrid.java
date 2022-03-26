@@ -27,10 +27,11 @@ import static me.bweloba.gameoflife.logic.Algorithms.computeNeighbors;
 public class PlayGrid {
 
     private static final Grid grids = new Grid();
-    static TilePaneModel tilePaneModel = new TilePaneModel();
-    static TilePane tile = tilePaneModel.getTile();
+    static final TilePaneModel tilePaneModel = new TilePaneModel();
+    static final TilePane tile = tilePaneModel.getTile();
     double spawnFactor = 0.6;
     double speedFactor = 0.6;
+    static final int cols = grids.getNumCols() - 1;
     double speed;
     static int[][] pGrid = grids.getGrid();
 
@@ -55,35 +56,35 @@ public class PlayGrid {
     public PlayGrid() {
         int[][] grid = grids.generateRandomGrid(spawnFactor);
         pGrid = grid;
-        initializeTilePaneWithGrid(grid, tile);
+        initializeTilePaneWithGrid(grid);
     }
 
     public static TilePane addTilePane() {
         return PlayGrid.tile;
     }
 
-    private static void initializeTilePaneWithGrid(int[][] grid, TilePane tile) {
-        tile.getChildren().clear();
+    private static void initializeTilePaneWithGrid(int[][] grid) {
+        PlayGrid.tile.getChildren().clear();
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 if (grid[i][j] == 1) {
-                    tile.getChildren().add(addButton(i + "," + j + "," + "1"));
+                    PlayGrid.tile.getChildren().add(addButton(i + "," + j + "," + "1"));
                 } else {
-                    tile.getChildren().add(addButton(i + "," + j + "," + "0"));
+                    PlayGrid.tile.getChildren().add(addButton(i + "," + j + "," + "0"));
                 }
             }
         }
-        setCellColor(tile);
+        setCellColor();
     }
 
-    private static void setCellColor(TilePane tile) {
-        for (int v = 0; v < tile.getChildren().size(); v++) {
-            String val = tile.getChildren().get(v).getId();
+    private static void setCellColor() {
+        for (int v = 0; v < PlayGrid.tile.getChildren().size(); v++) {
+            String val = PlayGrid.tile.getChildren().get(v).getId();
             String value = val.substring(val.lastIndexOf(",") + 1);
             if (value.equals("1")) {
-                tile.getChildren().get(v).setStyle("-fx-background-color: #2a9d8f;-fx-border-color: #ffffff; -fx-border-width: 1px;");
+                PlayGrid.tile.getChildren().get(v).setStyle("-fx-background-color: #2a9d8f;-fx-border-color: #ffffff; -fx-border-width: 1px;");
             } else {
-                tile.getChildren().get(v).setStyle("-fx-background-color: #001318;-fx-border-color: #ffffff; -fx-border-width: 1px;");
+                PlayGrid.tile.getChildren().get(v).setStyle("-fx-background-color: #001318;-fx-border-color: #ffffff; -fx-border-width: 1px;");
             }
         }
     }
@@ -91,11 +92,12 @@ public class PlayGrid {
     //method to construct button
     public static Button addButton(String value) {
         Button button = new Button();
+        double buttonSize = 15;
         button.setId(value);
-        button.setMinSize(17.5, 17.5);
-        button.setMaxSize(17.5, 17.5);
+        button.setMinSize(buttonSize, buttonSize);
+        button.setMaxSize(buttonSize, buttonSize);
         button.setStyle("-fx-border-color: #ffffff; -fx-border-width: 1px;");
-        button.setShape(new javafx.scene.shape.Circle(17.5));
+        button.setShape(new javafx.scene.shape.Circle(buttonSize));
 
         button.setOnMouseClicked(event -> {
             String val = button.getId();
@@ -104,7 +106,7 @@ public class PlayGrid {
             int i = Integer.parseInt(values[0]);
             int j = Integer.parseInt(values[1]);
             int k = Integer.parseInt(values[2]);
-            int index = i * 62 + j + i;
+            int index = i * cols + j + i;
             Button b = (Button) tile.getChildren().get(index);
             System.out.println("pGrid[" + i + "][" + j + "] = " + k);
             if (k == 1) {
@@ -128,6 +130,12 @@ public class PlayGrid {
 
     @FXML
     public void onClearButtonClick() {
+        if (timeline.getStatus() == Animation.Status.RUNNING) {
+            timeline.stop();
+        }
+        stopButton.setDisable(true);
+        startButton.setDisable(false);
+        speedSlider.setDisable(false);
         for (int i = 0; i < tile.getChildren().size(); i++) {
             Button b = (Button) tile.getChildren().get(i);
             b.setStyle("-fx-background-color: #001318;-fx-border-color: #ffffff; -fx-border-width: 1px;");
@@ -145,7 +153,7 @@ public class PlayGrid {
         pGrid = grid;
         for (int i = 0; i < grid.length; i++)
             for (int j = 0; j < grid[i].length; j++) {
-                Button b = (Button) tile.getChildren().get(i * 62 + j + i);
+                Button b = (Button) tile.getChildren().get(i * cols + j + i);
                 if (grid[i][j] == 1) {
                     b.setStyle("-fx-background-color: #2a9d8f;-fx-border-color: #ffffff; -fx-border-width: 1px;");
                     b.setId(i + "," + j + "," + "1");
@@ -156,13 +164,13 @@ public class PlayGrid {
             }
     }
 
-    Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.2), event -> {
+    final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.02), event -> {
 
         int[][] nGrid = applyConwayRules(pGrid);
         pGrid = nGrid;
         for (int i = 0; i < nGrid.length; i++)
             for (int j = 0; j < nGrid[i].length; j++) {
-                Button b = (Button) tile.getChildren().get(i * 62 + j + i);
+                Button b = (Button) tile.getChildren().get(i * cols + j + i);
                 if (nGrid[i][j] == 1) {
                     b.setId(i + "," + j + "," + "1");
                     b.setStyle("-fx-background-color: #2a9d8f;-fx-border-color: #ffffff; -fx-border-width: 1px;");
