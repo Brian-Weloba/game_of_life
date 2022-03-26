@@ -30,7 +30,7 @@
             <Insets bottom="-15.0" />
         </VBox.margin>
     </Label>
-    <ChoiceBox minWidth="130.0" prefWidth="200.0" value="Conway's GOL">
+    <ChoiceBox fx:id="algoChoice" minWidth="130.0" prefWidth="200.0" value="Conway's GOL">
         <items>
             <FXCollections fx:factory="observableArrayList">
                 <String fx:value="Conway's GOL" />
