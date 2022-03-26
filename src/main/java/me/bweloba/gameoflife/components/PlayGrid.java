@@ -42,9 +42,6 @@ public class PlayGrid {
     public Button startButton;
 
     @FXML
-    public Button stopButton;
-
-    @FXML
     public Slider speedSlider;
 
     public void initialize() {
@@ -133,8 +130,7 @@ public class PlayGrid {
         if (timeline.getStatus() == Animation.Status.RUNNING) {
             timeline.stop();
         }
-        stopButton.setDisable(true);
-        startButton.setDisable(false);
+        startButton.setText("START");
         speedSlider.setDisable(false);
         for (int i = 0; i < tile.getChildren().size(); i++) {
             Button b = (Button) tile.getChildren().get(i);
@@ -149,12 +145,16 @@ public class PlayGrid {
 
     @FXML
     public void onSpawnButtonClick() {
-        int[][] grid = grids.generateRandomGrid(spawnFactor);
-        pGrid = grid;
-        for (int i = 0; i < grid.length; i++)
-            for (int j = 0; j < grid[i].length; j++) {
+        if (timeline.getStatus() == Animation.Status.RUNNING) {
+            timeline.stop();
+        }
+        startButton.setText("START");
+        speedSlider.setDisable(false);
+        pGrid = grids.generateRandomGrid(spawnFactor);
+        for (int i = 0; i < pGrid.length; i++)
+            for (int j = 0; j < pGrid[i].length; j++) {
                 Button b = (Button) tile.getChildren().get(i * cols + j + i);
-                if (grid[i][j] == 1) {
+                if (pGrid[i][j] == 1) {
                     b.setStyle("-fx-background-color: #2a9d8f;-fx-border-color: #ffffff; -fx-border-width: 1px;");
                     b.setId(i + "," + j + "," + "1");
                 } else {
@@ -182,22 +182,18 @@ public class PlayGrid {
     }));
 
     @FXML
-    public void onStopButtonClick() {
-
-        if (timeline.getStatus() == Animation.Status.RUNNING) {
-            timeline.stop();
-        }
-        stopButton.setDisable(true);
-        startButton.setDisable(false);
-        speedSlider.setDisable(false);
-    }
-
-    @FXML
     public void onStartButtonClick() {
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
-        stopButton.setDisable(false);
-        startButton.setDisable(true);
-        speedSlider.setDisable(true);
+
+        if (timeline.getStatus() == Animation.Status.STOPPED) {
+            timeline.setCycleCount(Animation.INDEFINITE);
+            timeline.play();
+            speedSlider.setDisable(true);
+            startButton.setText("STOP");
+        } else {
+            timeline.stop();
+            speedSlider.setDisable(false);
+            startButton.setText("START");
+        }
+
     }
 }

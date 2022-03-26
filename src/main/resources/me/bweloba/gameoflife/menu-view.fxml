@@ -11,7 +11,6 @@
         <Insets bottom="40.0" left="20.0" right="20.0" top="40.0" />
     </padding>
     <Button fx:id="startButton" maxWidth="-Infinity" onAction="#onStartButtonClick" prefWidth="70.0" text="START" />
-    <Button fx:id="stopButton" disable="true" maxWidth="-Infinity" onAction="#onStopButtonClick" prefWidth="70.0" text="STOP" />
     <Label alignment="CENTER" text="Sim Speed" textAlignment="CENTER">
         <VBox.margin>
             <Insets bottom="-15.0" />
