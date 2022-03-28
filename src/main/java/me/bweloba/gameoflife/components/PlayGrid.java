@@ -175,7 +175,7 @@ public class PlayGrid {
         return switch (algoChoice) {
             case "Conway's GOL" -> applyConwayRules(grid);
             case "High Life" -> applyHighLifeRules(grid);
-            case "Day &amp; Night" -> applyDayNightRules(grid);
+            case "Day & Night" -> applyDayNightRules(grid);
             case "Diamoeba" -> applyDiamoebaRules(grid);
             case "Replicator" -> applyReplicatorRules(grid);
             case "Seeds" -> applySeedsRules(grid);
