@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 
 public class TilePaneModel {
     private  TilePane tile = new TilePane();
-    public Grid grids = new Grid();
+    public final Grid grids = new Grid();
 
     public  TilePaneModel() {
         tile.setPrefColumns(grids.getNumCols());
