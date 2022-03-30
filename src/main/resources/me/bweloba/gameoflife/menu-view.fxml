@@ -11,21 +11,21 @@
         <Insets bottom="40.0" left="20.0" right="20.0" top="40.0" />
     </padding>
     <Button fx:id="startButton" maxWidth="-Infinity" onAction="#onStartButtonClick" prefWidth="70.0" text="START" />
-    <Label alignment="CENTER" text="Sim Speed" textAlignment="CENTER">
+    <Label fx:id="speedLabel" alignment="CENTER" text="Sim Speed" textAlignment="CENTER">
         <VBox.margin>
             <Insets bottom="-15.0" />
         </VBox.margin>
     </Label>
     <Slider fx:id="speedSlider" blockIncrement="0.1" majorTickUnit="0.9" max="0.9" maxWidth="-Infinity" min="0.1" minorTickCount="8" prefHeight="14.0" prefWidth="70.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.6" />
-    <Button onAction="#onClearButtonClick" text="CLEAR" />
-    <Button onAction="#onSpawnButtonClick" text="SPAWN" />
-    <Label alignment="CENTER" text="Spawn Factor" textAlignment="CENTER">
+    <Button fx:id="clearButton" onAction="#onClearButtonClick" text="CLEAR" />
+    <Button fx:id="spawnButton" onAction="#onSpawnButtonClick" text="SPAWN" />
+    <Label fx:id="spawnLabel" alignment="CENTER" text="Spawn Factor" textAlignment="CENTER">
         <VBox.margin>
             <Insets bottom="-15.0" />
         </VBox.margin>
     </Label>
     <Slider fx:id="spawnSlider" blockIncrement="0.1" majorTickUnit="1.0" max="0.9" maxWidth="-Infinity" min="0.1" minorTickCount="8" prefHeight="14.0" prefWidth="70.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0.6" />
-    <Label alignment="CENTER" text="Algorithm" textAlignment="CENTER">
+    <Label fx:id="algoLabel" alignment="CENTER" text="Algorithm" textAlignment="CENTER">
         <VBox.margin>
             <Insets bottom="-15.0" />
         </VBox.margin>
