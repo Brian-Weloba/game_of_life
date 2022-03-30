@@ -1,4 +1,6 @@
 <img src='https://img.shields.io/github/license/Brian-Weloba/game_of_life.svg'>
+<img src='https://img.shields.io/github/issues/Brian-Weloba/game_of_life.svg'>
+	
 
 # Game-of-Life
 A Java implementation of Conway's Game of Life and other variations.
