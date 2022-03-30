@@ -6,6 +6,7 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
@@ -46,6 +47,12 @@ public class PlayGrid {
 
     @FXML
     public ChoiceBox algoChoice;
+
+    @FXML
+    public Button clearButton;
+
+    @FXML
+    public Button spawnButton;
 
     public void initialize() {
         spawnSlider.valueProperty().addListener((observable, oldValue, newValue) -> spawnFactor = newValue.doubleValue());
@@ -128,12 +135,6 @@ public class PlayGrid {
     @FXML
     public void onClearButtonClick() {
 
-//        System.out.println("algoChoice.getValue() = " + algoChoice.getValue());
-        if (timeline.getStatus() == Animation.Status.RUNNING) {
-            timeline.stop();
-        }
-        startButton.setText("START");
-        speedSlider.setDisable(false);
         for (int i = 0; i < tile.getChildren().size(); i++) {
             Button b = (Button) tile.getChildren().get(i);
             b.setStyle("-fx-background-color: #001318;-fx-border-color: #ffffff; -fx-border-width: 1px;");
@@ -147,11 +148,6 @@ public class PlayGrid {
 
     @FXML
     public void onSpawnButtonClick() {
-        if (timeline.getStatus() == Animation.Status.RUNNING) {
-            timeline.stop();
-        }
-        startButton.setText("START");
-        speedSlider.setDisable(false);
         pGrid = grids.generateRandomGrid(spawnFactor);
         for (int i = 0; i < pGrid.length; i++)
             for (int j = 0; j < pGrid[i].length; j++) {
@@ -167,6 +163,7 @@ public class PlayGrid {
     }
 
     int number = 5;
+
     public void random() {
         System.out.println("random number = " + number);
     }
@@ -211,15 +208,33 @@ public class PlayGrid {
         if (timeline.getStatus() == Animation.Status.STOPPED) {
             timeline.setCycleCount(Animation.INDEFINITE);
             timeline.play();
-            speedSlider.setDisable(true);
             startButton.setText("STOP");
-            algoChoice.setDisable(true);
+            toggleButtonVisibility(true);
         } else {
             timeline.stop();
-            speedSlider.setDisable(false);
             startButton.setText("START");
-            algoChoice.setDisable(false);
+            toggleButtonVisibility(false);
         }
 
+    }
+
+    @FXML
+    public Label algoLabel;
+
+    @FXML
+    public Label speedLabel;
+
+    @FXML
+    public Label spawnLabel;
+
+    private void toggleButtonVisibility(boolean show) {
+        speedSlider.setDisable(show);
+        algoChoice.setDisable(show);
+        clearButton.setDisable(show);
+        spawnButton.setDisable(show);
+        spawnSlider.setDisable(show);
+        algoLabel.setDisable(show);
+        speedLabel.setDisable(show);
+        spawnLabel.setDisable(show);
     }
 }
